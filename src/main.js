@@ -5,7 +5,7 @@ import vertexShader from 'C:/Users/MOHAMMAD Aima/Documents/ThreeJS/earth/shaders
 import atmosphereVertexShader from 'C:/Users/MOHAMMAD Aima/Documents/ThreeJS/earth/shaders/atmosphereVertex.glsl'
 import fragmentShader from 'C:/Users/MOHAMMAD Aima/Documents/ThreeJS/earth/shaders/fragment.glsl'
 import atmosphereFragmentShader from 'C:/Users/MOHAMMAD Aima/Documents/ThreeJS/earth/shaders/atmosphereFragment.glsl'
-
+import gsap from 'gsap'
 
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight,0.1,1000)
@@ -33,7 +33,6 @@ const sphere = new THREE.Mesh(
     }
   ))
 
-scene.add(sphere)
 
 // Creation atmosphère
 const atmosphere = new THREE.Mesh(
@@ -51,13 +50,34 @@ const atmosphere = new THREE.Mesh(
 atmosphere.scale.set(1.1,1.1,1.1)
 scene.add(atmosphere)
 
+const group = new THREE.Group()
+group.add(sphere)
+scene.add(group)
+
 camera.position.z=12
 
+const mouse ={
+  x:undefined,
+  y:undefined
+}
 function animate()
 {   requestAnimationFrame(animate)
     renderer.render(scene, camera)
     sphere.rotation.y+=0.003
+    gsap.to(group.rotation, {
+      y:mouse.x*0.5,
+      x:-mouse.y*0.3,
+      duration:2
+    })
   }
 animate()
-  
+
+addEventListener('mousemove',()=>
+{
+  mouse.x=(event.clientX/innerWidth)*2-1
+  mouse.y=(event.clientY/innerHeight)*2+1
+  console.log(mouse)
+
+})
+
   
