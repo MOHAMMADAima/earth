@@ -56,6 +56,7 @@ camera.position.z=12
 function animate()
 {   requestAnimationFrame(animate)
     renderer.render(scene, camera)
+    sphere.rotation.y+=0.003
   }
 animate()
   
