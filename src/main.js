@@ -27,7 +27,7 @@ const sphere = new THREE.Mesh(
     fragmentShader,
     uniforms: {
       globeTexture : {
-        value : new THREE.TextureLoader().load('./image/globe2.jpg')
+        value : new THREE.TextureLoader().load('./image/earthblue.jpg')
       }
     }
     }
@@ -36,7 +36,7 @@ const sphere = new THREE.Mesh(
 
 // Creation atmosphère
 const atmosphere = new THREE.Mesh(
-  new THREE.SphereGeometry(5,50,50),
+  new THREE.SphereGeometry(4.7,50,50),
  new THREE.ShaderMaterial(
   {
   vertexShader: atmosphereVertexShader,  // ou bien jute vertexShader lorsque le nom de la propriété=nom de la variable
@@ -60,11 +60,11 @@ const starGeometry = new THREE.BufferGeometry()
 const starMaterial= new THREE.PointsMaterial({color:0xffffff})
 
 const starVertices = [] 
-for(let i =0; i<10000; i++)
+for(let i =0; i<5000; i++)
 {
   const x=(Math.random()-0.5)*2000
   const y=(Math.random()-0.5)*2000
-  const z=-Math.random()*2000
+  const z=-Math.random(20)*2000
   starVertices.push(x,y,z)
 
   starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices,3))
@@ -72,7 +72,7 @@ for(let i =0; i<10000; i++)
 const stars= new THREE.Points(starGeometry,starMaterial)
 scene.add(stars)
 
-camera.position.z=12
+camera.position.z=10
 
 const mouse ={
   x:undefined,
@@ -81,10 +81,10 @@ const mouse ={
 function animate()
 {   requestAnimationFrame(animate)
     renderer.render(scene, camera)
-    sphere.rotation.y+=0.003
+    sphere.rotation.y+=0.006
     gsap.to(group.rotation, {
-      y:mouse.x*0.5,
-      x:-mouse.y*0.3,
+      y:mouse.x*0.8,
+      x:mouse.y*0.9,
       duration:2
     })
   }
